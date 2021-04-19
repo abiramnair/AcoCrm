@@ -1,1 +1,1 @@
-web: gunicorn <abelprojectname>.wsgi --log-file -
+web: gunicorn AcoCrm.wsgi --log-file -

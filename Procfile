@@ -1,0 +1,1 @@
+web: gunicorn <abelprojectname>.wsgi --log-file -

@@ -11,14 +11,13 @@ from django.utils.html import mark_safe
 User = get_user_model()
 
 
-
 class Customer(models.Model):
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        help_text = "Staff Member who served this customer."
+        help_text="Staff Member who served this customer."
     )
     date_created = models.DateField(default=date.today, null=True, blank=True)
     time_created = models.TimeField(auto_now_add=True, null=True, blank=True)
@@ -26,7 +25,8 @@ class Customer(models.Model):
         null=True,
         blank=True,
         default=date.today() + timedelta(days=7),
-        help_text='DO NOT EDIT. Only change if the customer request to be contacted on a different day. Default is 7 days.'
+        help_text='DO NOT EDIT. Only change if the customer request to be contacted on a different day. Default is 7 '
+                  'days. '
     )
     first_name = models.CharField(max_length=55)
     last_name = models.CharField(max_length=55)
@@ -41,18 +41,18 @@ class Customer(models.Model):
         choices=PREFERRED_METHOD_OF_CONTACT,
         max_length=50,
         null=True, blank=True,
-        help_text = "This Customer's preferred method of contact."
+        help_text="This Customer's preferred method of contact."
     )
     pdpa_agreed = models.BooleanField(
         help_text='Customer has agreed to PDPA rules.',
-        verbose_name = 'PDPA Acknowledged'
+        verbose_name='PDPA Acknowledged'
     )
     deal_stage = models.CharField(
         max_length=50,
         choices=DEAL_STAGES,
         null=True,
         blank=True,
-        default = 'interested',
+        default='interested',
     )
     comments = models.TextField(null=True, blank=True)
 

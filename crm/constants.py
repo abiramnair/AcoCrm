@@ -3,7 +3,6 @@ DEAL_STAGES = (
     ('collected sample pack', 'Collected Sample Pack'),
     ('contacted', 'Contacted'),
     ('appointment booked', 'Appointment Booked'),
-    ('purchased', 'Purchased'),
     ('closed lost', 'Closed (Lost)'),
     ('closed won', 'Closed (Won)'),
     ('complained', 'Complained'),

@@ -1,11 +1,12 @@
-from datetime import timedelta
+from datetime import timedelta, date
 
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.datetime_safe import strftime
+from django.utils.datetime_safe import strftime, datetime
 
 from .constants import DEAL_STAGES, PREFERRED_METHOD_OF_CONTACT
 from .validators import mobile_number_validator, discount_validator
+from django.utils.html import mark_safe
 
 User = get_user_model()
 
@@ -18,8 +19,14 @@ class Customer(models.Model):
         blank=True,
         help_text = "Staff Member who served this customer."
     )
-    date_created = models.DateTimeField(auto_now=True)
-    date_to_be_contacted = models.DateField(null=True, blank=True, editable=False)
+    date_created = models.DateField(default=date.today, null=True, blank=True)
+    time_created = models.TimeField(auto_now_add=True, null=True, blank=True)
+    date_to_be_contacted = models.DateField(
+        null=True,
+        blank=True,
+        default=date.today() + timedelta(days=7),
+        help_text='DO NOT EDIT. Only change if the customer request to be contacted on a different day. Default is 7 days.'
+    )
     first_name = models.CharField(max_length=55)
     last_name = models.CharField(max_length=55)
     mobile_number = models.CharField(
@@ -48,10 +55,21 @@ class Customer(models.Model):
     )
     comments = models.TextField(null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.date_to_be_contacted = self.calculate_date_to_be_contacted
-        super().save(*args, **kwargs)
+    @property
+    def method(self):
+        return self.contact_method
+
+    @property
+    def created(self):
+        return self.date_created
+
+    @property
+    def contact_date(self):
+        return self.date_to_be_contacted
+
+    @property
+    def stage(self):
+        return mark_safe('<strong style="color:#5a8dee;">%s</strong>' % self.deal_stage.title())
 
     @property
     def get_full_name(self):
@@ -60,6 +78,18 @@ class Customer(models.Model):
     @property
     def calculate_date_to_be_contacted(self):
         return self.date_created + timedelta(days=7)
+
+    @property
+    def contact_status(self):
+        if not self.deal_stage == 'closed lost':
+            if self.date_to_be_contacted < date.today():
+                return mark_safe('<strong style="color:red;">OVERDUE</strong>')
+            elif self.date_to_be_contacted == date.today():
+                return mark_safe('<strong>TODAY</strong>')
+            else:
+                return f"Due in {(self.date_to_be_contacted - date.today()).days} days."
+        else:
+            return mark_safe('<strong style="color:red;">DO NOT CONTACT</strong>')
 
     def __str__(self):
         return self.get_full_name

@@ -9,11 +9,15 @@ class CustomerAdmin(admin.ModelAdmin):
         'get_full_name',
         'mobile_number',
         'email',
-        'deal_stage',
-        'date_created',
-        'date_to_be_contacted'
+        'stage',
+        'method',
+        'created',
+        'contact_date',
+        'comments',
+        'contact_status',
     ]
     list_filter = [
+        'created_by',
         'deal_stage',
         'date_created',
         'date_to_be_contacted',

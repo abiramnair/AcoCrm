@@ -11,7 +11,6 @@ from django.utils.html import mark_safe
 User = get_user_model()
 
 
-
 class Customer(models.Model):
     created_by = models.ForeignKey(
         User,

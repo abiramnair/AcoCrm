@@ -10,6 +10,7 @@ whitenoise = "*"
 pillow = "*"
 dj-database-url = "*"
 gunicorn = "*"
+django-jazzmin = "*"
 
 [dev-packages]
 

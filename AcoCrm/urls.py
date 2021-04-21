@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
+from crm.views import login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', login, name='login' )
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Overriding Django Administration to Alexandr&Co.
+admin.site.site_header = "Alexandr&Co. Admin"
+admin.site.site_title = "Alexandr&Co. Admin Portal"
+admin.site.index_title = "Welcome to Alexandr&Co. Admin Portal"

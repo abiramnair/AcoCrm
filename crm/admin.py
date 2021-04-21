@@ -22,6 +22,12 @@ class CustomerAdmin(admin.ModelAdmin):
         'date_created',
         'date_to_be_contacted',
     ]
+    search_fields = [
+        'first_name',
+        'last_name',
+        'email',
+        'comments'
+    ]
 
     def save_model(self, request, obj, form, change):
         '''

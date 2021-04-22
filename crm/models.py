@@ -15,9 +15,7 @@ class Customer(models.Model):
     created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        help_text="Staff Member who served this customer."
+        help_text="Alexandr&Co. Staff Member who served this customer."
     )
     date_created = models.DateField(default=date.today, null=True, blank=True)
     time_created = models.TimeField(auto_now_add=True, null=True, blank=True)
@@ -37,12 +35,10 @@ class Customer(models.Model):
         validators=[mobile_number_validator, ]
     )
     email = models.EmailField(null=True, blank=True)
-    contact_method = models.CharField(
-        choices=PREFERRED_METHOD_OF_CONTACT,
-        max_length=50,
-        null=True, blank=True,
-        help_text="This Customer's preferred method of contact."
-    )
+    contact_call = models.BooleanField(default=False)
+    contact_whatsapp = models.BooleanField(default=False)
+    contact_email = models.BooleanField(default=False)
+    do_not_contact = models.BooleanField(default=False, verbose_name='DO NOT CONTACT')
     pdpa_agreed = models.BooleanField(
         help_text='Customer has agreed to PDPA rules.',
         verbose_name='PDPA Acknowledged'
@@ -57,8 +53,8 @@ class Customer(models.Model):
     comments = models.TextField(null=True, blank=True)
 
     @property
-    def method(self):
-        return self.contact_method
+    def mobile(self):
+        return self.mobile_number
 
     @property
     def created(self):
@@ -73,12 +69,22 @@ class Customer(models.Model):
         return mark_safe('<strong style="color:#5a8dee;">%s</strong>' % self.deal_stage.title())
 
     @property
-    def get_full_name(self):
+    def full_name(self):
         return f"{self.first_name} {self.last_name}"
 
     @property
-    def calculate_date_to_be_contacted(self):
+    def contact_on(self):
         return self.date_created + timedelta(days=7)
+
+    @property
+    def contact_via(self):
+        methods = (
+            ('Email', self.contact_email),
+            ('Whatsapp', self.contact_whatsapp),
+            ('Call', self.contact_call),
+            ('Do Not Contact', self.do_not_contact),
+        )
+        return [m[0] for m in methods if m[1]]
 
     @property
     def contact_status(self):
@@ -93,7 +99,7 @@ class Customer(models.Model):
             return mark_safe('<strong style="color:red;">DO NOT CONTACT</strong>')
 
     def __str__(self):
-        return self.get_full_name
+        return self.full_name
 
 
 class Location(models.Model):

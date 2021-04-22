@@ -5,15 +5,35 @@ from .models import Customer, Product, Sale, Location, SaleItem
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
+
+    fieldsets = (
+        ('Meta Info', {
+            'fields': ('created_by', 'date_created', 'date_to_be_contacted')
+        }),
+        ('Contact Information', {
+            'fields': ('first_name', 'last_name', 'mobile_number', 'email')
+        }),
+        ('Preferred Method of Contact', {
+            'fields': ('contact_call', 'contact_whatsapp', 'contact_email', 'do_not_contact')
+        }),
+        ('PDPA (Personal Data Protection Act)', {
+            'fields': ('pdpa_agreed',)
+        }),
+        ('Customer Relations', {
+            'fields': ('deal_stage', 'comments')
+        }),
+    )
+
     list_display = [
-        'get_full_name',
-        'mobile_number',
+        'full_name',
+        'mobile',
         'email',
         'stage',
-        'method',
         'created',
         'contact_date',
         'comments',
+        'contact_via',
+        'contact_on',
         'contact_status',
     ]
     list_filter = [

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import datetime
 import os
 from pathlib import Path
 
@@ -146,5 +147,5 @@ JAZZMIN_SETTINGS = {
     "site_logo": 'images/header-icon-chrysalis.png',
     "show_sidebar": True,
     "custom_css": 'css/custom_admin_styles.css',
-    "copyright": "Alexandr&Co® is a registered trademark of Picket & Rail Holdings Pte. Ltd"
+    "copyright": "Alexandr&Co®"
 }

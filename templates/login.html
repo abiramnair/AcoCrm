@@ -21,9 +21,11 @@
 </head>
 <body class="body">
   <div class="auth-container">
+      {% if message %}
     <div class="error-message-auth">
-      <p class="error-message-text">The username or password combination did not match</p>
+      <p class="error-message-text">{{ message }}</p>
     </div>
+      {% endif %}
     <div class="block-auth-container">
       <div class="block-auth"><img src="{% static 'images/header-icon-chrysalis.png' %}" width="24" height="24" alt="" class="image-4">
         <div class="auth-form-block w-form"><img src="{% static 'images/logo-svg.svg' %}" width="150" alt="" class="auth-form-brand">

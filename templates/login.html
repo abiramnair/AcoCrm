@@ -30,9 +30,15 @@
           <div class="div-block-12">
             <h4 class="block-title">Staff Portal</h4>
           </div>
-          <form id="email-form" name="email-form" data-name="Email Form" class="auth-form"><label for="name" class="auth-form-field">Username</label><input type="text" class="text-field w-input" maxlength="256" name="name" data-name="Name" id="name"><label for="email" class="auth-form-field">Password</label><input type="password" class="text-field w-input" maxlength="256" name="email" data-name="Email" id="email" required=""><input type="submit" value="Login" data-wait="Please wait..." class="course-start-button w-button">
+          <form id="email-form" name="login-form" data-name="Email Form" class="auth-form" action="{% url 'login' %}" method="post">
+              {% csrf_token %}
+              <label for="username" class="auth-form-field">Username</label>
+              <input type="text" class="text-field w-input" maxlength="256" name="username" data-name="Name" id="name">
+              <label for="password" class="auth-form-field">Password</label>
+              <input type="password" class="text-field w-input" maxlength="256" name="password" data-name="Email" id="email" required="">
+              <input type="submit" value="Login" data-wait="Please wait..." class="course-start-button w-button">
             <div class="div-block-13">
-              <div class="auth-security">Secure Authentication.</div><img src="images/lock-white-18dp.svg" width="15" height="15" alt="" class="image-5">
+              <div class="auth-security">Secure Authentication.</div><img src="{% static 'images/lock-white-18dp.svg' %}" width="15" height="15" alt="" class="image-5">
             </div>
           </form>
           <div class="w-form-done">

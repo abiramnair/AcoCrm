@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'AcoCrm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db',
+        'USER': 'db',
+        'PASSWORD': 'ukaaf8ug3hio62ko',
+        'HOST': 'app-36f8aa28-429b-43c5-8db0-d79e0463bb20-do-user-7133472-0.b.db.ondigitalocean.com',
+        'PORT': '25060',
     }
 }
 
@@ -137,3 +141,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TIME_ZONE = 'Asia/Singapore'
+
+JAZZMIN_SETTINGS = {
+    "site_logo": 'images/header-icon-chrysalis.png',
+    "show_sidebar": True,
+    "custom_css": 'css/custom_admin_styles.css',
+    "copyright": "Alexandr&Co® is a registered trademark of Picket & Rail Holdings Pte. Ltd"
+}

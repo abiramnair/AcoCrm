@@ -1,0 +1,11 @@
+[class*=sidebar-dark-] {
+    background-image: linear-gradient(90deg, #14172c, #1f2341) !important;
+}
+
+.img-circle {
+    border-radius: 0 !important;
+}
+
+.card-primary.card-outline {
+    border-top: 3px solid #1f2341;
+}

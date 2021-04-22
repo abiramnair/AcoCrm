@@ -3,6 +3,9 @@ from django.contrib.auth import authenticate, login as auth_login
 
 
 def login(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect('admin:index')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']

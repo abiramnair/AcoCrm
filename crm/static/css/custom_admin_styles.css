@@ -23,3 +23,7 @@
     padding: 10px;
     letter-spacing:1px;
 }
+
+.form-control {
+    border-bottom:1px solid black !important;
+}

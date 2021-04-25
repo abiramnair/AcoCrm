@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crm.apps.CrmConfig',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -168,7 +169,7 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
-    "theme": "lux",
+    "theme": "materia",
     "dark_mode_theme": None,
     "button_classes": {
         "primary": "btn-outline-primary",

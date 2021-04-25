@@ -12,6 +12,7 @@ dj-database-url = "*"
 gunicorn = "*"
 django-jazzmin = "*"
 requests = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

@@ -7,7 +7,8 @@ from django.dispatch import receiver
 from django.utils.datetime_safe import strftime, datetime
 
 from .constants import DEAL_STAGES, PREFERRED_METHOD_OF_CONTACT
-from .shopify import run_query, create_customer_query
+from .shopify import run_query
+from .graphql import create_customer_query, update_customer_query
 from .validators import mobile_number_validator, discount_validator
 from django.utils.html import mark_safe
 
@@ -44,7 +45,8 @@ class Customer(models.Model):
     do_not_contact = models.BooleanField(default=False, verbose_name='DO NOT CONTACT')
     pdpa_agreed = models.BooleanField(
         help_text='Customer has agreed to PDPA rules.',
-        verbose_name='PDPA Acknowledged'
+        verbose_name='PDPA Acknowledged',
+        default=True,
     )
     deal_stage = models.CharField(
         max_length=50,
@@ -54,6 +56,7 @@ class Customer(models.Model):
         default='interested',
     )
     comments = models.TextField(null=True, blank=True)
+    gid = models.CharField(max_length=55, editable=False, default='') #Unique GraphQL ID
 
     @property
     def mobile(self):
@@ -164,12 +167,12 @@ class SaleItem(models.Model):
 
 
 @receiver(post_save, sender=Customer)
-def create_customer(sender, created, **kwargs):
+def create_or_update_customer(sender, created, **kwargs):
+    customer = kwargs['instance']
     if created:
-        customer = kwargs['instance']
-        phone = customer.mobile_number
-        email = customer.email
-        first_name = customer.first_name
-        last_name = customer.last_name
-        accepts_marketing = True
-        run_query(create_customer_query, first_name, last_name, email, phone, accepts_marketing)
+        run_query(create_customer_query, customer)
+    else:
+        run_query(update_customer_query, customer)
+
+
+

@@ -48,3 +48,7 @@ def create_customer():
         headers=headers
     )
     print(r.json())
+
+
+def create_customer_gql(query):
+    r = requests.post()

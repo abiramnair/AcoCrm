@@ -46,9 +46,9 @@ class Customer(models.Model):
     deal_stage = models.CharField(
         max_length=50,
         choices=DEAL_STAGES,
+        default='collected sample pack',
         null=True,
         blank=True,
-        default='interested',
     )
     comments = models.TextField(null=True, blank=True)
 

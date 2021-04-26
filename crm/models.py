@@ -2,9 +2,13 @@ from datetime import timedelta, date
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.datetime_safe import strftime, datetime
 
 from .constants import DEAL_STAGES, PREFERRED_METHOD_OF_CONTACT
+from .shopify import run_query
+from .graphql import create_customer_query, update_customer_query
 from .validators import mobile_number_validator, discount_validator
 from django.utils.html import mark_safe
 
@@ -41,7 +45,8 @@ class Customer(models.Model):
     do_not_contact = models.BooleanField(default=False, verbose_name='DO NOT CONTACT')
     pdpa_agreed = models.BooleanField(
         help_text='Customer has agreed to PDPA rules.',
-        verbose_name='PDPA Acknowledged'
+        verbose_name='PDPA Acknowledged',
+        default=True,
     )
     deal_stage = models.CharField(
         max_length=50,
@@ -51,6 +56,7 @@ class Customer(models.Model):
         blank=True,
     )
     comments = models.TextField(null=True, blank=True)
+    gid = models.CharField(max_length=55, editable=False, default='') #Unique GraphQL ID
 
     @property
     def mobile(self):
@@ -158,3 +164,15 @@ class SaleItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=1)
     selling_price = models.DecimalField(decimal_places=2, max_digits=10)
+
+
+@receiver(post_save, sender=Customer)
+def create_or_update_customer(sender, created, **kwargs):
+    customer = kwargs['instance']
+    if created:
+        run_query(create_customer_query, customer)
+    else:
+        run_query(update_customer_query, customer)
+
+
+

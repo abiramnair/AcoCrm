@@ -12,7 +12,6 @@ dj-database-url = "*"
 gunicorn = "*"
 django-jazzmin = "*"
 requests = "*"
-django-debug-toolbar = "*"
 django-extensions = "*"
 python-decouple = "*"
 

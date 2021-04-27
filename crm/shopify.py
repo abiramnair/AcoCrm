@@ -1,4 +1,5 @@
 import requests
+from decouple import config
 
 headers = {
     "Accept": "application/json",
@@ -20,7 +21,7 @@ def run_query(query, customer):
     if customer.gid:
         variables['input']['id'] = customer.gid
     r = requests.post(
-        "https://07f482e43a73c9a534d365cddd9e7603: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@chrysalis-silk"
+        f"https://{config('SHOPIFY_API_KEY')}:{config('SHOPIFY_API_PASSWORD')}@chrysalis-silk"
         "-treasures.myshopify.com/admin/api/2021-04/graphql.json",
         json={
             'query': query,

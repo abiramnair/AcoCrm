@@ -49,15 +49,20 @@ class CustomerAdmin(admin.ModelAdmin):
         'comments'
     ]
 
+    def get_changeform_initial_data(self, request):
+        return {
+            'created_by': request.user,
+        }
+
     def save_model(self, request, obj, form, change):
-        '''
+        """
         Method to ensure saved customers will be automatically assigned to the creator.
         :param request: request object
         :param obj: instance of Customer
         :param form: N/A
         :param change: N/A
         :return: N/A
-        '''
+        """
 
         obj.created_by = request.user
         obj.save()

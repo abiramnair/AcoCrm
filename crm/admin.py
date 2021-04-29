@@ -54,8 +54,8 @@ class CustomerAdmin(admin.ModelAdmin):
     def get_changeform_initial_data(self, request):
         return {
             'created_by': request.user,
-            # 'date_created': datetime(2021,4,15),
-            # 'date_to_be_contacted': datetime(2021,4,22)
+            # 'date_created': datetime(2021,4,16),
+            # 'date_to_be_contacted': datetime(2021,4,23)
         }
 
     def save_model(self, request, obj, form, change):

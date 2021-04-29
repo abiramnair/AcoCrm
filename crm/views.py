@@ -23,6 +23,10 @@ def login(request):
     return render(request, 'login.html')
 
 
+def quick_add_customer(request):
+    pass
+
+
 def create_customer():
 
     payload = {
@@ -50,5 +54,3 @@ def create_customer():
     print(r.json())
 
 
-def create_customer_gql(query):
-    r = requests.post()

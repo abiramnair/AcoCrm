@@ -1,0 +1,29 @@
+[class*=sidebar-dark-] {
+    background-image: linear-gradient(90deg, #14172c, #1f2341) !important;
+}
+
+.img-circle {
+    border-radius: 0 !important;
+}
+
+.card-primary.card-outline {
+    border-top: 3px solid #1f2341;
+}
+
+.fa, .far, .fas {
+    font-size: LARGE;
+}
+
+.timeline>div>.timeline-item>.timeline-header {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    color: #495057;
+    font-size: 12px;
+    line-height: 1.1;
+    margin: 0;
+    padding: 10px;
+    letter-spacing:1px;
+}
+
+.form-control {
+    border-bottom:1px solid black !important;
+}

@@ -166,6 +166,24 @@ class SaleItem(models.Model):
     selling_price = models.DecimalField(decimal_places=2, max_digits=10)
 
 
+class CrmAdmin(models.Model):
+    default_add_date = models.DateField()
+    default_contact_date = models.DateField()
+    use_defaults = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'Admin Settings Module'
+
+    class Meta:
+        verbose_name = 'CRM Admin Settings'
+        verbose_name_plural = 'CRM Admin Settings'
+
+    def save(self, *args, **kwargs):
+        if len(CrmAdmin.objects.all()) > 1:
+            CrmAdmin.objects.all().delete()
+        super().save(*args, **kwargs)
+
+
 @receiver(post_save, sender=Customer)
 def create_or_update_customer(sender, created, **kwargs):
     customer = kwargs['instance']

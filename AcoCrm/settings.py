@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     'alexandrco.herokuapp.com',
     'localhost',
     'aco-crm-4hw89.ondigitalocean.app',
+    '0.0.0.0',
 ]
 
 # Application definition

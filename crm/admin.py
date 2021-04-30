@@ -1,8 +1,13 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from django.contrib import admin
+from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Customer, Product, Sale, Location, SaleItem
+from .models import Customer, Product, Sale, Location, SaleItem, CrmAdmin
+
+@admin.register(CrmAdmin)
+class CrmAdminAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Customer)
@@ -52,11 +57,23 @@ class CustomerAdmin(admin.ModelAdmin):
     ]
 
     def get_changeform_initial_data(self, request):
-        return {
-            'created_by': request.user,
-            # 'date_created': datetime(2021,4,16),
-            # 'date_to_be_contacted': datetime(2021,4,23)
-        }
+        from .models import CrmAdmin
+        crm_settings = CrmAdmin.objects.all()[0]
+        if not crm_settings:
+            CrmAdmin.objects.create(
+                default_add_date=date.today(),
+                default_contact_date=date.today() + timedelta(days=7),
+                use_defaults=True)
+        if crm_settings.use_defaults:
+            return {
+                'created_by': request.user,
+                'date_created': crm_settings.default_add_date,
+                'date_to_be_contacted': crm_settings.default_contact_date,
+            }
+        else:
+            return {
+                'created_by': request.user,
+            }
 
     def save_model(self, request, obj, form, change):
         """

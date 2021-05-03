@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crm.apps.CrmConfig',
     'django_extensions',
+    'import_export',
 ]
 
 MIDDLEWARE = [

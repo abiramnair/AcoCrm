@@ -107,6 +107,9 @@ class Customer(models.Model):
     def __str__(self):
         return self.full_name
 
+    class Meta:
+        ordering = ['-date_created']
+
 
 class Location(models.Model):
     name = models.CharField(max_length=20)

@@ -15,6 +15,7 @@ requests = "*"
 django-extensions = "*"
 python-decouple = "*"
 django-debug-toolbar = "*"
+django-import-export = "*"
 
 [dev-packages]
 

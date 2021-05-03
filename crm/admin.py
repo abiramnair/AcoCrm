@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Customer, Product, Sale, Location, SaleItem, CrmAdmin
+from import_export import resources
 
 
 @admin.register(CrmAdmin)
@@ -120,3 +121,10 @@ class SaleAdmin(admin.ModelAdmin):
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
 	pass
+
+
+class CustomerResource(resources.ModelResource):
+	class Meta:
+		model = Customer
+		fields = ('email',)
+

@@ -9,9 +9,6 @@ services:
       - postgres_data:/var/lib/postgresql/data/
   web:
     build: .
-    environment:
-      - "EMAIL_HOST_PASSWORD=kniayvlmmwpaifam"
-      - "STRIPE_ENDPOINT_SECRET=whsec_XZF9tPSvjiIejHDsALvvq6Qzh8m0cp94"
     volumes:
       - .:/code
     ports:

@@ -16,7 +16,7 @@ class CrmAdminAdmin(admin.ModelAdmin):
 class CustomerAdmin(admin.ModelAdmin):
 	fieldsets = (
 		('Meta Info', {
-			'fields': ('created_by', 'date_created', 'date_to_be_contacted')
+			'fields': ('created_by', 'date_created', 'date_to_be_contacted', 'location')
 		}),
 		('Contact Information', {
 			'fields': ('first_name', 'last_name', 'mobile_number', 'email')

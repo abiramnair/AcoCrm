@@ -30,6 +30,15 @@ class Customer(models.Model):
         help_text='DO NOT EDIT. Only change if the customer request to be contacted on a different day. Default is 7 '
                   'days. '
     )
+    location = models.CharField(
+        max_length=20,
+        choices=(
+            ('OG Orchard Point', 'OG Orchard Point'),
+            ('City Square Mall', 'City Square Mall'),
+            ('Tagore', 'Tagore'),
+        ),
+        default='OG Orchard Point',
+    )
     first_name = models.CharField(max_length=55)
     last_name = models.CharField(max_length=55)
     mobile_number = models.CharField(
